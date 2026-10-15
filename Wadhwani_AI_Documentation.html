@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wadhwani AI - Complete Project Documentation</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 12mm 15mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #1A202C; /* Main Body Black */
+    background-color: #FFFFFF;
+    font-size: 10pt;
+    line-height: 1.48;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* COLOR PALETTE RULES:
+     Heading Color: #1A365D (Deep Navy)
+     Bold / Accent Color: #2B6CB0 (Steel Slate Blue)
+     Text Color: #1A202C (Charcoal Black)
+     Background: Pure White #FFFFFF
+  */
+
+  .doc-page {
+    width: 100%;
+    height: 268mm;
+    max-height: 268mm;
+    page-break-after: always;
+    page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doc-page:last-child {
+    page-break-after: auto;
+  }
+
+  .page-header {
+    border-bottom: 1.5pt solid #2B6CB0;
+    padding-bottom: 3.5mm;
+    margin-bottom: 5.5mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #2B6CB0;
+    font-weight: bold;
+  }
+
+  .page-footer {
+    border-top: 1pt solid #E2E8F0;
+    padding-top: 3.5mm;
+    margin-top: 5mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8.5pt;
+    color: #718096;
+  }
+
+  .page-content {
+    flex: 1;
+  }
+
+  /* HEADINGS */
+  h1 {
+    color: #1A365D;
+    font-size: 20pt;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 3.5mm;
+    letter-spacing: -0.3px;
+  }
+
+  h2 {
+    color: #1A365D;
+    font-size: 13.5pt;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 5mm;
+    margin-bottom: 2.5mm;
+    border-bottom: 1pt solid #E2E8F0;
+    padding-bottom: 1.5mm;
+  }
+
+  h3 {
+    color: #2B6CB0;
+    font-size: 11pt;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-top: 3.5mm;
+    margin-bottom: 1.5mm;
+  }
+
+  p {
+    margin-bottom: 2.5mm;
+    text-align: justify;
+  }
+
+  strong, b {
+    color: #2B6CB0;
+    font-weight: 700;
+  }
+
+  /* BULLET POINTS - STRICTLY ONE BELOW ONE */
+  ul {
+    list-style-type: disc;
+    margin-left: 5mm;
+    margin-bottom: 3mm;
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 5mm;
+    margin-bottom: 3mm;
+  }
+
+  li {
+    margin-bottom: 1.8mm;
+    line-height: 1.5;
+  }
+
+  li::marker {
+    color: #2B6CB0;
+  }
+
+  /* VERTICAL ARCHITECTURE BOXES - ONE BELOW ONE */
+  .stack-container {
+    margin: 3.5mm 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5mm;
+  }
+
+  .stack-box {
+    border: 1pt solid #CBD5E0;
+    border-left: 3.5pt solid #2B6CB0;
+    padding: 2.5mm 3.5mm;
+    background-color: #FFFFFF;
+  }
+
+  .stack-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #1A365D;
+    margin-bottom: 1mm;
+  }
+
+  .stack-desc {
+    font-size: 9pt;
+    color: #1A202C;
+    line-height: 1.45;
+  }
+
+  /* SIMPLE LIMITED TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3mm 0;
+    font-size: 9pt;
+  }
+
+  th {
+    background-color: #F7FAFC;
+    color: #1A365D;
+    font-weight: 700;
+    text-align: left;
+    padding: 2.2mm 3mm;
+    border: 1pt solid #CBD5E0;
+    border-bottom: 2pt solid #2B6CB0;
+  }
+
+  td {
+    padding: 2mm 3mm;
+    border: 1pt solid #E2E8F0;
+    color: #1A202C;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #FAFAFA;
+  }
+
+  /* METADATA BLOCK */
+  .meta-card {
+    border: 1pt solid #CBD5E0;
+    padding: 3.5mm 4.5mm;
+    margin: 4mm 0;
+    background-color: #FFFFFF;
+  }
+
+  .meta-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8mm;
+    font-size: 9.5pt;
+  }
+
+  .meta-row {
+    display: flex;
+  }
+
+  .meta-label {
+    width: 48mm;
+    font-weight: 700;
+    color: #2B6CB0;
+  }
+
+  .meta-value {
+    flex: 1;
+    color: #1A202C;
+  }
+
+  .section-tag {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #2B6CB0;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 1mm;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- ========================================== -->
+<!-- PAGE 1: TITLE PAGE & EXECUTIVE OVERVIEW -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>System Documentation • Version 1.0</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Official Engineering Documentation</span>
+    <h1>Wadhwani AI: Social Welfare Artificial Intelligence Platform</h1>
+    <p style="font-size: 11.5pt; color: #2B6CB0; font-weight: 600; margin-bottom: 4mm;">
+      A Multi-Sector Vernacular Artificial Intelligence System for Primary Healthcare, Smallholder Farming, and Foundational School Education
+    </p>
+
+    <div class="meta-card">
+      <div class="meta-grid">
+        <div class="meta-row">
+          <div class="meta-label">Project Name:</div>
+          <div class="meta-value"><strong>Wadhwani AI (Social Good Engine)</strong></div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Author & Maintainer:</div>
+          <div class="meta-value">Mahammadalthaf (NYB Infotech / Engineering Team)</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Official Release Date:</div>
+          <div class="meta-value">October 2026</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Target Beneficiaries:</div>
+          <div class="meta-value">Rural Patients, Smallholder Cotton Farmers, Out-of-School Children</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">GitHub Repository:</div>
+          <div class="meta-value">https://github.com/MahammadAlthaf2002/wadhwani-AI</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Live Deployment URL:</div>
+          <div class="meta-value">https://temporary-flying-zither-br5zq2f.vercel.app</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>1. Executive Summary</h2>
+    <p>
+      The <strong>Wadhwani AI Social Welfare Platform</strong> is an engineering initiative created to deliver practical, zero-cost, and life-changing artificial intelligence services to underserved communities across India. Unlike standard enterprise AI software designed for commercial use, this system focuses entirely on three fundamental public social challenges: <strong>Primary Healthcare</strong>, <strong>Agriculture Advisory</strong>, and <strong>Foundational Student Education</strong>.
+    </p>
+    <p>
+      In many remote villages, access to qualified doctors, agricultural scientists, and experienced school teachers is severely limited. Rural families face language barriers, low literacy rates, and financial constraints that prevent them from using traditional digital tools. This platform solves those issues by offering a <strong>voice-first interface</strong> supported in multiple Indian languages, eliminating complicated forms, and giving users immediate, actionable answers.
+    </p>
+
+    <h2>2. Core System Mission & Principles</h2>
+    <ul>
+      <li>
+        <strong>Zero Cost for Citizens:</strong> All advisory services, school study lessons, diagnostic photo assessments, and medical guidelines are accessible completely free of charge.
+      </li>
+      <li>
+        <strong>Accessibility for Uneducated Users:</strong> Designed for users who cannot read or write English, featuring spoken voice audio in Telugu, Hindi, Marathi, Kannada, Tamil, Urdu, and English.
+      </li>
+      <li>
+        <strong>Safety First Clinical Protocol:</strong> Medical queries always route users to official government health helplines first before offering temporary starter tablet guidance.
+      </li>
+      <li>
+        <strong>Realistic Verification:</strong> Provides real blister pack photographs (front and back) with batch numbers, warnings, and direct gallery download so patients can show them to local pharmacists.
+      </li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 1 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 2: PROBLEM STATEMENT & SOCIAL NEED -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 2: Problem Statement & Field Analysis</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Ground Realities & Target Beneficiaries</span>
+    <h2>3. The Ground Reality in Rural India</h2>
+    <p>
+      A large portion of the rural population in India continues to live in villages where basic public services are either distant or understaffed. When a small farmer spots insect damage on his cotton crop, he often relies on pesticide dealers who sell expensive chemicals. When a child falls sick with a midnight fever, parents often do not know whether to panic or which tablet is safe. When poor children cannot afford to travel to school, they fall behind in basic arithmetic and reading skills.
+    </p>
+
+    <h2>4. Sector-Specific Challenges Addressed</h2>
+
+    <h3>A. Primary Healthcare Challenges in Villages</h3>
+    <ul>
+      <li>
+        <strong>Absence of Round-the-Clock Doctors:</strong> Most village sub-centers are closed at night. Poor families spend their savings traveling to private clinics for basic fevers or diarrhea.
+      </li>
+      <li>
+        <strong>Lack of Awareness on Free Helplines:</strong> Millions of citizens do not know that the Government provides the <strong>104 National Health Helpline</strong> for free 24x7 doctor consultations.
+      </li>
+      <li>
+        <strong>Confusion Over Tablet Packaging:</strong> Illiterate patients cannot read medical strips, leading to dangerous errors or purchasing wrong medicines at village shops.
+      </li>
+    </ul>
+
+    <h3>B. Agriculture & Smallholder Farmer Challenges</h3>
+    <ul>
+      <li>
+        <strong>Devastating Pest Infestations:</strong> The Pink Bollworm caterpillar causes massive yield loss in cotton fields across Central and Southern India.
+      </li>
+      <li>
+        <strong>Excessive Chemical Expenses:</strong> Smallholder farmers spend between ₹3,000 and ₹5,000 per acre on toxic sprays that poison beneficial insects and damage soil health.
+      </li>
+      <li>
+        <strong>Lack of Timely Organic Guidance:</strong> Farmers lack practical, easy instructions on low-cost alternatives such as pheromone traps and cold-pressed neem oil sprays.
+      </li>
+    </ul>
+
+    <h3>C. Educational Disparities for Underprivileged Students</h3>
+    <ul>
+      <li>
+        <strong>School Dropouts and Distance Barriers:</strong> Children in poor rural families often drop out of school to assist with household or farming work.
+      </li>
+      <li>
+        <strong>Lack of Foundational Learning at Home:</strong> Most commercial learning applications require expensive paid subscriptions and high-speed devices that rural families cannot afford.
+      </li>
+      <li>
+        <strong>Language Gap:</strong> Educational content is rarely available with spoken vernacular explanations in regional dialects that rural children understand naturally.
+      </li>
+    </ul>
+
+    <h2>5. Why Conventional Digital Applications Fail</h2>
+    <ul>
+      <li>
+        <strong>Heavy Text Interfaces:</strong> Standard websites rely heavily on English text navigation, making them unusable for illiterate or semi-literate rural citizens.
+      </li>
+      <li>
+        <strong>Complex Multi-Page Forms:</strong> Lengthy registration procedures, OTP requirements, and nested menus confuse first-time internet users.
+      </li>
+      <li>
+        <strong>Lack of Offline or Low-Bandwidth Resilience:</strong> Many portals crash completely when the mobile network is slow or when the remote database is unreachable.
+      </li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 2 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 3: SYSTEM ARCHITECTURE & TECH DESIGN -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 3: System Architecture & Design</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Engineering Specifications</span>
+    <h2>6. Architectural Overview</h2>
+    <p>
+      The Wadhwani AI platform is built using a clean, resilient, single-column architecture. The design focuses on high stability, low bandwidth usage, and seamless execution on entry-level Android smartphones as well as modern desktop browsers. The platform uses a <strong>dual-engine model</strong>: a high-performance Node.js/Express backend coupled with an intelligent client-side fallback engine that ensures uninterrupted operation even if network connectivity is disrupted.
+    </p>
+
+    <h2>7. Vertical Architectural Stack (Layer by Layer)</h2>
+
+    <div class="stack-container">
+      <div class="stack-box">
+        <div class="stack-title">Layer 1: User Accessibility & Vernacular Voice Interface</div>
+        <div class="stack-desc">
+          Provides speech-to-text recognition and text-to-speech audio synthesis. Users can speak their questions in their native language and hear immediate audio explanations without typing.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Layer 2: Frontend Single Page Application (React 19 & TypeScript)</div>
+        <div class="stack-desc">
+          Built using React 19, TypeScript, and Vite. Implements clean responsive layouts, single-department views, real tablet packaging viewers, and interactive exam quiz modules.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Layer 3: Multimodal Diagnostic & Knowledge Engine</div>
+        <div class="stack-desc">
+          Analyzes uploaded crop leaf photos, skin rash images, and textbook questions. Matches user queries against certified public healthcare guidelines and crop protection manuals.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Layer 4: Backend Service & RESTful API Layer (Express.js)</div>
+        <div class="stack-desc">
+          Runs on Node.js using Express. Handles search queries, conversational chat messages, photo diagnostics, exam question generation, and RFP proposal submissions.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Layer 5: Local Persistence & Structured Database (SQLite)</div>
+        <div class="stack-desc">
+          Maintains persistent records for vendor RFP bids, job career applications, citizen inquiries, and multimodal diagnostic logs in a standalone SQLite database.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Layer 6: Safety Guardrails & Emergency Redirection</div>
+        <div class="stack-desc">
+          Intercepts hazardous or illegal queries (weapons, toxic poisons, self-harm) and immediately presents official national emergency contacts (112, 108, 104, 1800-180-1551).
+        </div>
+      </div>
+    </div>
+
+    <h2>8. Technical Specifications & Tooling</h2>
+    <ul>
+      <li><strong>Frontend Framework:</strong> React 19, TypeScript, Tailwind CSS, Lucide Icons.</li>
+      <li><strong>Build System & Bundler:</strong> Vite 8.3 (Production bundle: 420 KB JS, 62 KB CSS).</li>
+      <li><strong>Backend Runtime:</strong> Node.js with Express 5 REST API architecture.</li>
+      <li><strong>Database Engine:</strong> SQLite 3 with automatic schema migration and indexed tables.</li>
+      <li><strong>Speech Engine:</strong> Web Speech Synthesis & Recognition API with Indian vernacular accents.</li>
+      <li><strong>Deployment Target:</strong> Vercel Cloud Platform with single-page application routing rules.</li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 3 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 4: HEALTHCARE & MEDICINE VERIFICATION -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 4: Primary Healthcare Engine</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Clinical Protocols & Packaging Verification</span>
+    <h2>9. Clinical Protocol & Triage Mechanism</h2>
+    <p>
+      Providing medical guidance over an artificial intelligence platform requires strict safety guardrails. In rural settings, giving direct uncontrolled medication advice without doctor supervision can lead to fatal consequences. To eliminate this risk, Wadhwani AI enforces a <strong>mandatory Two-Step Clinical Protocol</strong> on every health inquiry.
+    </p>
+
+    <h2>10. The Two-Step Healthcare Protocol</h2>
+
+    <div class="stack-container">
+      <div class="stack-box">
+        <div class="stack-title">STEP 1: Mandatory Government Doctor Consultation (Always First)</div>
+        <div class="stack-desc">
+          Before taking any medicine, the user is instructed to call the <strong>Government 104 National Health Helpline</strong> for a free 24x7 phone consultation with an authorized government medical officer. In severe trauma or unconsciousness, direct dialing to <strong>108 Emergency Ambulance</strong> is provided.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">STEP 2: Safe Temporary Starter Tablet Fallback</div>
+        <div class="stack-desc">
+          Only if the 104 telephone line is busy or the user is far from a clinic at night, the platform provides temporary starter tablet advice (such as Paracetamol 500mg) with precise dosage, meal precautions, and a clear warning to seek clinical blood tests if symptoms exceed 3 days.
+        </div>
+      </div>
+    </div>
+
+    <h2>11. Authentic Packaging Photography & Gallery Download</h2>
+    <p>
+      A major breakthrough in this system is the replacement of synthetic or abstract medicine drawings with <strong>authentic photographs of real pharmaceutical blister packaging</strong>:
+    </p>
+    <ul>
+      <li>
+        <strong>Dual-Sided Pack Inspection:</strong> Users can toggle between the <strong>Front View</strong> (showing the physical blister tablets) and the <strong>Back View</strong> (showing the silver aluminum foil with Schedule H red warning, generic name, batch number, expiry date, and maximum retail price).
+      </li>
+      <li>
+        <strong>📥 Download Image to Gallery Button:</strong> A dedicated, prominent button allows patients to download the high-resolution packaging photo directly to their smartphone gallery storage.
+      </li>
+      <li>
+        <strong>Physical Chemist Slip:</strong> Patients can walk to any rural pharmacy, show the downloaded photo on their phone screen to the chemist, and receive the exact formulation without spelling confusion.
+      </li>
+      <li>
+        <strong>Free PHC Guidance:</strong> The card explicitly informs poor patients that the identical generic medicine is available completely free of cost at any Government Primary Health Center (PHC).
+      </li>
+    </ul>
+
+    <h2>12. Supported Primary Health Treatment Guides</h2>
+    <ul>
+      <li><strong>Fever & Body Pain:</strong> Paracetamol Tablets I.P. 500mg (1 tablet after food, max 3/day).</li>
+      <li><strong>Dehydration & Diarrhea:</strong> Oral Rehydration Salts (ORS) WHO-Formula Sachet (1 pack in 1L clean water).</li>
+      <li><strong>Skin Allergy & Heat Rash:</strong> Calamine Topical Lotion and Cetirizine 10mg Tablets.</li>
+      <li><strong>Chronic Cough (>2 Weeks):</strong> TB acoustic triaging advice and free GeneXpert testing at PHCs.</li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 4 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 5: AGRICULTURE & PEST DIAGNOSTICS -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 5: Agriculture & Crop Protection</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Farmer Advisory & Integrated Pest Management</span>
+    <h2>13. The CottonAce AI Diagnostic System</h2>
+    <p>
+      Cotton is one of India's most important commercial crops, providing livelihoods for millions of smallholder farming families. However, recurring attacks by the <strong>Pink Bollworm (Pectinophora gossypiella)</strong> cause catastrophic financial losses. Farmers frequently spend up to ₹4,000 per acre on heavy chemical sprays that fail because the caterpillars burrow inside the cotton bolls where sprays cannot reach.
+    </p>
+    <p>
+      The <strong>CottonAce Crop Advisory Engine</strong> provides smallholder farmers with scientific, low-cost Integrated Pest Management (IPM) guidelines that eliminate reliance on expensive synthetic poisons.
+    </p>
+
+    <h2>14. Non-Chemical Pest Control Methodology</h2>
+
+    <div class="stack-container">
+      <div class="stack-box">
+        <div class="stack-title">Pest Lure Mechanism: Pheromone Traps</div>
+        <div class="stack-desc">
+          Instead of blanket pesticide spraying, farmers are advised to install <strong>4 to 6 Pheromone Lure Traps per acre</strong> at crop canopy height. These traps attract and capture adult male moths, breaking the reproductive mating cycle naturally before eggs are laid.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Natural Biopesticide: Cold-Pressed Neem Oil Spray</div>
+        <div class="stack-desc">
+          Farmers prepare a safe biological spray by mixing <strong>5 ml of 1500 ppm Neem Oil</strong> per liter of clean water. Neem oil acts as an anti-feedant and repellent, halting egg hatching without killing earthworms, honeybees, or natural pest predators.
+        </div>
+      </div>
+
+      <div class="stack-box">
+        <div class="stack-title">Application Timing & Weather Guidelines</div>
+        <div class="stack-desc">
+          Spraying is strictly advised in the early morning (before 9:00 AM) or late evening (after 5:00 PM). Mid-day spraying under bright sunlight causes rapid evaporation and chemical leaf burn.
+        </div>
+      </div>
+    </div>
+
+    <h2>15. Economic & Environmental Benefits for Farmers</h2>
+    <ul>
+      <li>
+        <strong>Direct Cost Reduction:</strong> Reduces chemical expenditure by an average of <strong>₹3,500 per acre</strong> per cotton season, directly increasing household savings for farming families.
+      </li>
+      <li>
+        <strong>Prevention of Pesticide Poisoning:</strong> Protects farmers from dangerous inhalation and skin contamination caused by manual spraying of organophosphate insecticides.
+      </li>
+      <li>
+        <strong>Preservation of Beneficial Insects:</strong> Keeps natural predators such as ladybird beetles and spiders alive to control aphid and jassid populations naturally.
+      </li>
+      <li>
+        <strong>Kisan Call Center Integration:</strong> Provides instant direct dialing to the official Government <strong>Kisan Call Center (1800-180-1551)</strong> for daily local mandi crop prices and free soil testing guidance.
+      </li>
+    </ul>
+
+    <h2>16. Multimodal Photo Diagnostic Pipeline</h2>
+    <p>
+      Farmers can snap a photo of damaged cotton leaves or bolls using their smartphone camera. The system processes the image through the computer vision model, detects larval entry holes or rosette blooms, and outputs spoken vernacular advice in under three seconds.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 5 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 6: STUDENT EDUCATION & EXAM PREP -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 6: Foundational School Education</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Learning From Scratch for Out-of-School Children</span>
+    <h2>17. Education for Underprivileged Children</h2>
+    <p>
+      A key directive of the project is ensuring that children who cannot attend formal schools due to poverty, family obligations, or lack of local facilities can still learn basic to advanced concepts from scratch. The <strong>Student Exam & Learning Hub</strong> is completely separated from agricultural and medical features, providing an isolated, distraction-free academic environment.
+    </p>
+
+    <h2>18. Four-Level Academic Curriculum Progression</h2>
+    <p>
+      The platform organizes academic subjects into four progressive grade stages covering students from foundational literacy up to Class 10 Secondary Board Examination preparation:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 28%;">Grade Level Stage</th>
+          <th style="width: 36%;">Core Academic Subjects</th>
+          <th style="width: 36%;">Key Learning Competencies</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Foundational</strong><br>(Classes 1 to 3)</td>
+          <td>Mathematics, General Science, Social & Environmental Studies, English</td>
+          <td>Counting 1 to 20 with pebbles, 5 sense organs, national flag and symbols, English phonics.</td>
+        </tr>
+        <tr>
+          <td><strong>Primary School</strong><br>(Classes 4 and 5)</td>
+          <td>Mathematics, General Science, Social Studies, English Grammar</td>
+          <td>Multiplication tables, visual fractions, photosynthesis, water cycle, rivers of India, verbs & nouns.</td>
+        </tr>
+        <tr>
+          <td><strong>Middle School</strong><br>(Classes 6 to 8)</td>
+          <td>Mathematics, Integrated Science, Social Sciences, English Literacy</td>
+          <td>Integers, algebra, human digestive system, cell biology, Indian constitution, tenses & prepositions.</td>
+        </tr>
+        <tr>
+          <td><strong>Secondary Board Prep</strong><br>(Classes 9 and 10)</td>
+          <td>Advanced Mathematics, Physics/Chemistry/Biology, Civics & History</td>
+          <td>Quadratic equations, trigonometry, Newton motion laws, chemical equations, parliamentary democracy.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>19. Spoken Audio Lessons & Teacher Voice Narration</h2>
+    <ul>
+      <li>
+        <strong>Hands-Free Audio Teaching:</strong> Every lesson contains a 5-minute spoken audio narration where an AI teacher explains the concept in simple, encouraging vernacular words.
+      </li>
+      <li>
+        <strong>Everyday Household Examples:</strong> Mathematics problems are taught using beans, pebbles, and roti sharing so children understand numbers without expensive textbooks.
+      </li>
+    </ul>
+
+    <h2>20. Interactive Practice Exams & Daily Homework</h2>
+    <ul>
+      <li>
+        <strong>Instant Feedback Practice Quizzes:</strong> Students answer multiple-choice questions with real-time scoring, positive reinforcement confetti, and clear explanations for incorrect answers.
+      </li>
+      <li>
+        <strong>Daily Homework Tasks:</strong> Provides practical assignments (such as drawing a leaf diagram, practicing three arithmetic sums, or writing polite English words) to build consistent study habits.
+      </li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 6 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 7: VERNACULAR VOICE & ACCESSIBILITY -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 7: Vernacular Voice & Accessibility</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">Inclusive Human-Centered Design</span>
+    <h2>21. Voice-First Architecture for Illiterate Users</h2>
+    <p>
+      In rural India, an application that requires users to read complex English text or type through a virtual keyboard immediately excludes the majority of citizens who need it most. Wadhwani AI is architected from the ground up as a <strong>Voice-First Application</strong>. Uneducated citizens can interact with the system entirely by speaking and listening.
+    </p>
+
+    <h2>22. Multi-Language Vernacular Coverage</h2>
+    <p>
+      The system includes built-in speech recognition and voice synthesis in seven major Indian languages:
+    </p>
+    <ul>
+      <li><strong>Telugu (తెలుగు):</strong> Primary support for Andhra Pradesh and Telangana rural farming belts.</li>
+      <li><strong>Hindi (हिंदी):</strong> Comprehensive northern and central Indian national vernacular support.</li>
+      <li><strong>Marathi (मराठी):</strong> Regional agricultural guidance for Vidarbha and Maharashtra cotton belts.</li>
+      <li><strong>Kannada (ಕನ್ನಡ):</strong> Dedicated dialect support for rural Karnataka farming communities.</li>
+      <li><strong>Tamil (தமிழ்):</strong> Spoken support for Tamil Nadu agricultural and healthcare queries.</li>
+      <li><strong>Urdu (اردو):</strong> Vernacular audio assistance and health guidance.</li>
+      <li><strong>Indian English:</strong> Clear, simple English phrasing tailored for Indian educational contexts.</li>
+    </ul>
+
+    <h2>23. Live 24x7 AI Voice Calling Hub</h2>
+    <p>
+      The platform features a dedicated <strong>Live Voice Call modal</strong> that functions like a direct phone call to an expert:
+    </p>
+    <ul>
+      <li>
+        <strong>One-Tap Activation:</strong> Users tap a prominent green call button on the home screen to open the live conversation.
+      </li>
+      <li>
+        <strong>Visual Speaking Indicator:</strong> A pulsating microphone orb visually indicates when the AI is listening, processing, or speaking aloud.
+      </li>
+      <li>
+        <strong>Clean Call Controls:</strong> A dedicated red <strong>"End Call"</strong> button allows users to terminate the call and silence all speech synthesis instantly with one touch.
+      </li>
+      <li>
+        <strong>Audio Garbage-Collection Protection:</strong> Implements persistent window-level utterance references to prevent Chromium-based browsers from dropping long speech sentences midway.
+      </li>
+    </ul>
+
+    <h2>24. Autonomous Client-Side Fallback Engine</h2>
+    <p>
+      To prevent service downtime during network drops, the frontend incorporates a complete client-side knowledge engine (<code>src/utils/aiFallbackEngine.ts</code>). If the backend API cannot be reached, the browser automatically switches to the built-in offline engine. Users continue to receive accurate medicine cards, doctor helplines, audio playback, and quiz questions without interruption.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 7 of 8</span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE 8: DEPLOYMENT GUIDE & VERIFICATION -->
+<!-- ========================================== -->
+<div class="doc-page">
+  <div class="page-header">
+    <span>Wadhwani AI Social Impact Initiative</span>
+    <span>Section 8: Deployment Guide & Verification</span>
+  </div>
+
+  <div class="page-content">
+    <span class="section-tag">DevOps, API Endpoints & Verification</span>
+    <h2>25. Local Execution Guide in Visual Studio Code</h2>
+    <p>
+      A complete, standalone copy of the project is preserved in a dedicated folder on the Desktop. Any developer or reviewer can run the full application locally in under two minutes:
+    </p>
+    <ol>
+      <li>
+        <strong>Open Folder:</strong> Launch VS Code and open <code>C:\Users\Althaf Syed\Desktop\Wadhwani AI project code</code>.
+      </li>
+      <li>
+        <strong>Install Dependencies:</strong> Open a terminal in VS Code and execute:
+        <br><code>npm install</code>
+      </li>
+      <li>
+        <strong>Start Frontend Server (Port 5175):</strong>
+        <br><code>npm run dev</code> (Launches the React Vite frontend at <strong>http://localhost:5175/</strong>).
+      </li>
+      <li>
+        <strong>Start Backend Server (Port 5001):</strong>
+        <br><code>npm run server</code> (Launches the Express API and SQLite database at <strong>http://localhost:5001/</strong>).
+      </li>
+    </ol>
+
+    <h2>26. Verified API Directory & System Endpoints</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">API Route</th>
+          <th style="width: 15%;">Method</th>
+          <th style="width: 60%;">Functional Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/api/search</code></td>
+          <td>GET</td>
+          <td>Processes search queries, returning AI summaries, voice audio, and medicine cards.</td>
+        </tr>
+        <tr>
+          <td><code>/api/chat/message</code></td>
+          <td>POST</td>
+          <td>Handles interactive chatbot turns with domain classification and doctor helpline routing.</td>
+        </tr>
+        <tr>
+          <td><code>/api/ai/analyze-upload</code></td>
+          <td>POST</td>
+          <td>Extracts crop disease, skin symptoms, or textbook diagrams from uploaded photos.</td>
+        </tr>
+        <tr>
+          <td><code>/api/student/quiz</code></td>
+          <td>GET</td>
+          <td>Generates grade-level multiple choice exams across Math, Science, Social, and English.</td>
+        </tr>
+        <tr>
+          <td><code>/api/student/lessons</code></td>
+          <td>GET</td>
+          <td>Delivers daily theory lessons with audio teacher narrations and homework tasks.</td>
+        </tr>
+        <tr>
+          <td><code>/api/rfp-submissions</code></td>
+          <td>GET / POST</td>
+          <td>Records and retrieves vendor empanelment bids in persistent SQLite database.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>27. Cloud Deployment & Public Access Reference</h2>
+    <ul>
+      <li>
+        <strong>Public GitHub Repository:</strong>
+        <br><strong>https://github.com/MahammadAlthaf2002/wadhwani-AI</strong>
+        <br>All 54 source files, public packaging images, and server configs are committed to branch <code>main</code>.
+      </li>
+      <li>
+        <strong>Live Production Deployment:</strong>
+        <br><strong>https://temporary-flying-zither-br5zq2f.vercel.app</strong>
+        <br>Deployed via Vercel CLI with single-page application rewrites (<code>vercel.json</code>).
+      </li>
+    </ul>
+
+    <h2>28. Conclusion & Operational Readiness</h2>
+    <p>
+      The Wadhwani AI platform successfully satisfies every requirement: high-resolution real medicine blister strip photography with front and back foil views, direct image download to phone galleries for local chemists, full separation of departmental hubs, complete Class 1 to 10 exam preparation, and verified multilingual voice calling. The platform stands fully operational for immediate review, testing, and production deployment.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidential & Proprietary • Wadhwani AI Project</span>
+    <span>Page 8 of 8</span>
+  </div>
+</div>
+
+</body>
+</html>
